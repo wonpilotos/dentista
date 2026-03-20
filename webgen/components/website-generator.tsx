@@ -220,12 +220,12 @@ function StepIndicator({
     <div className="w-full max-w-2xl mb-8">
       <div className="relative flex items-start justify-between">
         {/* Background line */}
-        <div className="absolute top-4 left-4 right-4 h-px bg-white/8" />
+        <div className="absolute top-5 left-5 right-5 h-0.5 bg-indigo-100" />
         {/* Progress line */}
         <div
-          className="absolute top-4 left-4 h-px bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-500 ease-out"
+          className="absolute top-5 left-5 h-0.5 bg-indigo-400 transition-all duration-500 ease-out"
           style={{
-            width: `calc(${(currentStep / (STEPS.length - 1)) * 100}% - 8px)`,
+            width: `calc(${(currentStep / (STEPS.length - 1)) * 100}% - 10px)`,
           }}
         />
 
@@ -237,37 +237,37 @@ function StepIndicator({
             <button
               key={id}
               onClick={() => onStepClick(id)}
-              className="relative z-10 flex flex-col items-center gap-1.5 group"
+              className="relative z-10 flex flex-col items-center gap-2 group"
               aria-label={`Paso ${id + 1}: ${label}`}
             >
               <div
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full border transition-all duration-300",
+                  "flex h-10 w-10 items-center justify-center rounded-2xl border-2 transition-all duration-300",
                   active &&
-                    "border-violet-400 bg-violet-500/25 shadow-[0_0_18px_rgba(139,92,246,0.55)]",
-                  done && "border-violet-600/60 bg-violet-500/15",
-                  !active && !done && "border-white/10 bg-white/4 group-hover:border-white/20"
+                    "border-indigo-400 bg-indigo-500 shadow-[0_6px_0_0_#4338CA] scale-110",
+                  done &&
+                    "border-indigo-300 bg-indigo-100 shadow-[0_4px_0_0_#C7D2FE]",
+                  !active &&
+                    !done &&
+                    "border-indigo-100 bg-white shadow-[0_4px_0_0_#E0E7FF] group-hover:border-indigo-200 group-hover:shadow-[0_4px_0_0_#C7D2FE]"
                 )}
               >
                 {done ? (
-                  <Check size={12} className="text-violet-400" />
+                  <Check size={14} className="text-indigo-500" />
                 ) : (
                   <Icon
-                    size={13}
+                    size={15}
                     className={cn(
                       "transition-colors duration-200",
-                      active ? "text-violet-300" : "text-slate-600 group-hover:text-slate-500"
+                      active ? "text-white" : "text-indigo-300 group-hover:text-indigo-400"
                     )}
                   />
-                )}
-                {active && (
-                  <span className="absolute inset-0 rounded-full animate-ping bg-violet-500/25" />
                 )}
               </div>
               <span
                 className={cn(
-                  "hidden sm:block text-[10px] font-medium tracking-wide transition-colors duration-200",
-                  active ? "text-violet-300" : done ? "text-slate-600" : "text-slate-700 group-hover:text-slate-600"
+                  "hidden sm:block text-[11px] font-semibold transition-colors duration-200",
+                  active ? "text-indigo-600" : done ? "text-indigo-400" : "text-indigo-200 group-hover:text-indigo-300"
                 )}
               >
                 {label}
@@ -293,19 +293,19 @@ function Field({
 }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-[10px] font-semibold uppercase tracking-widest text-slate-600">
+      <Label className="text-xs font-bold uppercase tracking-widest text-indigo-400">
         {label}
       </Label>
       {children}
-      {hint && <p className="text-[11px] text-slate-700 leading-snug">{hint}</p>}
+      {hint && <p className="text-[11px] text-indigo-300 leading-snug">{hint}</p>}
     </div>
   );
 }
 
-// ─── Styled Input shorthand ───────────────────────────────────────────────────
+// ─── Styled Input ─────────────────────────────────────────────────────────────
 
 const inputCls =
-  "bg-white/[0.04] border-white/10 focus:border-violet-500/50 focus-visible:ring-violet-500/20 placeholder:text-slate-700 text-slate-200 transition-colors";
+  "bg-indigo-50 border-2 border-indigo-100 focus:border-indigo-400 focus-visible:ring-indigo-200 placeholder:text-indigo-200 text-indigo-900 rounded-xl shadow-[0_3px_0_0_#C7D2FE] transition-all";
 
 // ─── Step: Negocio ────────────────────────────────────────────────────────────
 
@@ -332,12 +332,12 @@ function StepNegocio({
             <SelectTrigger className={inputCls}>
               <SelectValue placeholder="Seleccionar..." />
             </SelectTrigger>
-            <SelectContent className="bg-[#0d1021] border-white/10">
+            <SelectContent className="bg-white border-2 border-indigo-100 rounded-2xl shadow-[0_8px_0_0_#C7D2FE]">
               {TIPOS_NEGOCIO.map((t) => (
                 <SelectItem
                   key={t}
                   value={t}
-                  className="text-slate-300 focus:bg-violet-500/20 focus:text-violet-200"
+                  className="text-indigo-900 focus:bg-indigo-50 focus:text-indigo-700 rounded-xl"
                 >
                   {t}
                 </SelectItem>
@@ -389,7 +389,7 @@ function StepNegocio({
         </Field>
         <Field label="Horario de atención">
           <Input
-            placeholder="Lun–Vie 9–18hs, Sáb 9–13hs"
+            placeholder="Lun-Vie 9-18hs, Sáb 9-13hs"
             value={data.horario}
             onChange={(e) => onChange("horario", e.target.value)}
             className={inputCls}
@@ -406,7 +406,7 @@ function StepNegocio({
         />
       </Field>
 
-      <Separator className="bg-white/8" />
+      <Separator className="bg-indigo-100" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Descripción breve">
@@ -463,38 +463,38 @@ function StepServicios({
 
   return (
     <div className="space-y-3">
-      <p className="text-sm text-slate-600 leading-relaxed">
+      <p className="text-sm text-indigo-400 leading-relaxed">
         Lista los servicios o productos que ofrecés. El precio es opcional.
       </p>
       <div className="space-y-2">
         {data.servicios.map((s, i) => (
           <div
             key={i}
-            className="group flex items-center gap-2.5 rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 transition-colors hover:border-white/12"
+            className="group flex items-center gap-2.5 rounded-2xl border-2 border-indigo-100 bg-indigo-50 px-4 py-3 shadow-[0_4px_0_0_#C7D2FE] transition-all hover:border-indigo-200"
           >
-            <span className="w-5 shrink-0 text-center font-mono text-[11px] text-slate-700">
+            <span className="w-5 shrink-0 text-center font-bold text-xs text-indigo-300">
               {i + 1}
             </span>
             <Input
               placeholder="Nombre del servicio"
               value={s.name}
               onChange={(e) => update(i, "name", e.target.value)}
-              className="h-7 flex-1 border-0 bg-transparent p-0 text-sm text-slate-200 placeholder:text-slate-700 focus-visible:ring-0"
+              className="h-7 flex-1 border-0 bg-transparent p-0 text-sm text-indigo-900 placeholder:text-indigo-200 focus-visible:ring-0"
             />
-            <div className="h-3.5 w-px shrink-0 bg-white/10" />
+            <div className="h-4 w-0.5 shrink-0 bg-indigo-100" />
             <Input
               placeholder="$ precio"
               value={s.price}
               onChange={(e) => update(i, "price", e.target.value)}
-              className="h-7 w-24 border-0 bg-transparent p-0 text-right text-sm text-slate-500 placeholder:text-slate-700 focus-visible:ring-0"
+              className="h-7 w-24 border-0 bg-transparent p-0 text-right text-sm text-indigo-400 placeholder:text-indigo-200 focus-visible:ring-0"
             />
             {data.servicios.length > 1 && (
               <button
                 onClick={() => remove(i)}
-                className="ml-0.5 rounded-md p-1 text-slate-700 opacity-0 transition-all hover:bg-red-500/10 hover:text-red-400 group-hover:opacity-100"
+                className="ml-0.5 rounded-xl p-1.5 text-indigo-200 opacity-0 transition-all hover:bg-red-50 hover:text-red-400 group-hover:opacity-100"
                 aria-label="Eliminar servicio"
               >
-                <Trash2 size={12} />
+                <Trash2 size={13} />
               </button>
             )}
           </div>
@@ -502,9 +502,9 @@ function StepServicios({
       </div>
       <button
         onClick={add}
-        className="flex items-center gap-1.5 py-1 text-xs text-slate-600 transition-colors hover:text-violet-400"
+        className="flex items-center gap-1.5 py-1 text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-600"
       >
-        <Plus size={12} />
+        <Plus size={13} />
         Agregar servicio
       </button>
     </div>
@@ -529,10 +529,10 @@ function StepDiseno({
               key={e}
               onClick={() => onChange("estilo", e)}
               className={cn(
-                "rounded-full border px-3.5 py-1.5 text-sm transition-all duration-200",
+                "rounded-2xl border-2 px-4 py-2 text-sm font-semibold transition-all duration-200",
                 data.estilo === e
-                  ? "border-violet-400/60 bg-violet-500/20 text-violet-300 shadow-[0_0_12px_rgba(139,92,246,0.25)]"
-                  : "border-white/10 text-slate-600 hover:border-white/18 hover:text-slate-400"
+                  ? "border-indigo-400 bg-indigo-500 text-white shadow-[0_4px_0_0_#4338CA]"
+                  : "border-indigo-100 bg-indigo-50 text-indigo-400 shadow-[0_4px_0_0_#C7D2FE] hover:border-indigo-200 hover:text-indigo-600"
               )}
             >
               {e}
@@ -561,11 +561,11 @@ function StepDiseno({
               <RadioGroupItem
                 value={opt}
                 id={`logo-${opt}`}
-                className="border-white/20 text-violet-400"
+                className="border-indigo-300 text-indigo-500"
               />
               <Label
                 htmlFor={`logo-${opt}`}
-                className="cursor-pointer capitalize text-sm text-slate-400"
+                className="cursor-pointer capitalize text-sm text-indigo-700 font-medium"
               >
                 {opt}
               </Label>
@@ -620,7 +620,7 @@ function StepPaginas({
   return (
     <div className="space-y-6">
       <div>
-        <Label className="mb-3 block text-[10px] font-semibold uppercase tracking-widest text-slate-600">
+        <Label className="mb-3 block text-xs font-bold uppercase tracking-widest text-indigo-400">
           Páginas del sitio
         </Label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -630,16 +630,21 @@ function StepPaginas({
               <label
                 key={p}
                 className={cn(
-                  "flex cursor-pointer select-none items-center gap-2.5 rounded-xl border px-3 py-2.5 text-sm transition-all",
+                  "flex cursor-pointer select-none items-center gap-2.5 rounded-2xl border-2 px-3 py-2.5 text-sm font-medium transition-all",
                   checked
-                    ? "border-violet-400/45 bg-violet-500/10 text-violet-300"
-                    : "border-white/8 bg-white/[0.02] text-slate-600 hover:border-white/12 hover:text-slate-500"
+                    ? "border-indigo-400 bg-indigo-500 text-white shadow-[0_4px_0_0_#4338CA]"
+                    : "border-indigo-100 bg-indigo-50 text-indigo-400 shadow-[0_4px_0_0_#C7D2FE] hover:border-indigo-200"
                 )}
               >
                 <Checkbox
                   checked={checked}
                   onCheckedChange={() => toggle(p)}
-                  className="h-3.5 w-3.5 shrink-0 data-[state=checked]:border-violet-500 data-[state=checked]:bg-violet-500"
+                  className={cn(
+                    "h-4 w-4 shrink-0 rounded-md border-2",
+                    checked
+                      ? "border-white bg-transparent data-[state=checked]:bg-white data-[state=checked]:text-indigo-500"
+                      : "border-indigo-200 data-[state=checked]:border-indigo-500 data-[state=checked]:bg-indigo-500"
+                  )}
                 />
                 <span className="leading-tight">{p}</span>
               </label>
@@ -648,23 +653,23 @@ function StepPaginas({
         </div>
       </div>
 
-      <Separator className="bg-white/8" />
+      <Separator className="bg-indigo-100" />
 
       <div>
-        <Label className="mb-3 block text-[10px] font-semibold uppercase tracking-widest text-slate-600">
+        <Label className="mb-3 block text-xs font-bold uppercase tracking-widest text-indigo-400">
           Funciones extra
         </Label>
-        <div className="space-y-0.5">
+        <div className="space-y-1">
           {extras.map(({ key, label }) => (
             <div
               key={key}
-              className="flex items-center justify-between rounded-xl px-3 py-2.5 transition-colors hover:bg-white/[0.02]"
+              className="flex items-center justify-between rounded-2xl border-2 border-indigo-50 px-4 py-3 transition-colors hover:border-indigo-100 hover:bg-indigo-50"
             >
-              <span className="text-sm text-slate-400">{label}</span>
+              <span className="text-sm font-medium text-indigo-700">{label}</span>
               <Switch
                 checked={data[key] as boolean}
                 onCheckedChange={(v) => onExtrasChange(key, v)}
-                className="data-[state=checked]:bg-violet-600"
+                className="data-[state=checked]:bg-indigo-500"
               />
             </div>
           ))}
@@ -697,10 +702,10 @@ function StepTecnologia({
               key={s}
               onClick={() => onChange("stack", s)}
               className={cn(
-                "rounded-full border px-3.5 py-1.5 text-sm transition-all duration-200",
+                "rounded-2xl border-2 px-4 py-2 text-sm font-semibold transition-all duration-200",
                 data.stack === s
-                  ? "border-violet-400/60 bg-violet-500/20 text-violet-300 shadow-[0_0_12px_rgba(139,92,246,0.25)]"
-                  : "border-white/10 text-slate-600 hover:border-white/18 hover:text-slate-400"
+                  ? "border-indigo-400 bg-indigo-500 text-white shadow-[0_4px_0_0_#4338CA]"
+                  : "border-indigo-100 bg-indigo-50 text-indigo-400 shadow-[0_4px_0_0_#C7D2FE] hover:border-indigo-200 hover:text-indigo-600"
               )}
             >
               {s}
@@ -726,11 +731,11 @@ function StepTecnologia({
                   <RadioGroupItem
                     value={opt}
                     id={`${field}-${opt}`}
-                    className="border-white/20 text-violet-400"
+                    className="border-indigo-300 text-indigo-500"
                   />
                   <Label
                     htmlFor={`${field}-${opt}`}
-                    className="cursor-pointer capitalize text-sm text-slate-400"
+                    className="cursor-pointer capitalize text-sm font-medium text-indigo-700"
                   >
                     {opt}
                   </Label>
@@ -752,11 +757,11 @@ function StepTecnologia({
               <RadioGroupItem
                 value={opt}
                 id={`seo-${opt}`}
-                className="border-white/20 text-violet-400"
+                className="border-indigo-300 text-indigo-500"
               />
               <Label
                 htmlFor={`seo-${opt}`}
-                className="cursor-pointer capitalize text-sm text-slate-400"
+                className="cursor-pointer capitalize text-sm font-medium text-indigo-700"
               >
                 {opt}
               </Label>
@@ -784,36 +789,36 @@ function StepResumen({ data }: { data: FormData }) {
   return (
     <div className="space-y-4">
       {/* Success banner */}
-      <div className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/8 p-3.5">
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/20">
-          <Check size={12} className="text-emerald-400" />
+      <div className="flex items-center gap-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-4 shadow-[0_4px_0_0_#A7F3D0]">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-emerald-500 shadow-[0_3px_0_0_#059669]">
+          <Check size={14} className="text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-emerald-300">¡Prompt listo!</p>
-          <p className="text-xs text-emerald-700 mt-0.5">
+          <p className="text-sm font-bold text-emerald-700">¡Prompt listo!</p>
+          <p className="text-xs text-emerald-500 mt-0.5">
             Copialo y pegalo en Claude para generar tu sitio.
           </p>
         </div>
         <Button
           onClick={copy}
           size="sm"
-          className="shrink-0 h-8 gap-1.5 border-0 bg-emerald-600/70 px-3 text-xs text-white hover:bg-emerald-600"
+          className="shrink-0 h-9 gap-1.5 rounded-2xl border-0 bg-emerald-500 px-4 text-xs font-bold text-white shadow-[0_4px_0_0_#059669] hover:bg-emerald-600 hover:shadow-[0_2px_0_0_#059669] active:shadow-none active:translate-y-1 transition-all"
         >
-          {copied ? <Check size={11} /> : <Copy size={11} />}
+          {copied ? <Check size={12} /> : <Copy size={12} />}
           {copied ? "Copiado" : "Copiar"}
         </Button>
       </div>
 
       {/* Code window */}
-      <div className="overflow-hidden rounded-xl border border-white/8 bg-black/25">
-        <div className="flex items-center gap-1.5 border-b border-white/8 bg-white/[0.02] px-4 py-2.5">
-          <div className="h-2 w-2 rounded-full bg-red-500/60" />
-          <div className="h-2 w-2 rounded-full bg-yellow-500/60" />
-          <div className="h-2 w-2 rounded-full bg-green-500/60" />
-          <span className="ml-2 font-mono text-[10px] text-slate-700">prompt.md</span>
+      <div className="overflow-hidden rounded-2xl border-2 border-indigo-100 bg-white shadow-[0_6px_0_0_#C7D2FE]">
+        <div className="flex items-center gap-1.5 border-b-2 border-indigo-50 bg-indigo-50 px-4 py-2.5">
+          <div className="h-2.5 w-2.5 rounded-full bg-red-400" />
+          <div className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
+          <div className="h-2.5 w-2.5 rounded-full bg-green-400" />
+          <span className="ml-2 font-mono text-[10px] font-bold text-indigo-300">prompt.md</span>
         </div>
         <div className="max-h-[360px] overflow-y-auto p-4">
-          <pre className="font-mono text-xs leading-relaxed text-slate-500 whitespace-pre-wrap">
+          <pre className="font-mono text-xs leading-relaxed text-indigo-400 whitespace-pre-wrap">
             {prompt}
           </pre>
         </div>
@@ -868,29 +873,24 @@ export function WebsiteGenerator() {
     <div className="relative z-10 flex min-h-dvh flex-col items-center justify-start px-4 py-12">
       {/* ── Header ── */}
       <header className="mb-10 text-center">
-        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-500/25 bg-violet-500/10 px-4 py-1.5 backdrop-blur-sm">
-          <Zap size={11} className="text-violet-400" />
-          <span className="text-[11px] font-bold uppercase tracking-widest text-violet-400">
+        <div className="mb-5 inline-flex items-center gap-2 rounded-2xl border-2 border-indigo-200 bg-white px-4 py-2 shadow-[0_4px_0_0_#C7D2FE]">
+          <Zap size={12} className="text-indigo-500" />
+          <span className="text-[11px] font-black uppercase tracking-widest text-indigo-600">
             WebGen
           </span>
           <Badge
             variant="outline"
-            className="h-4 border-violet-500/30 bg-transparent px-1.5 text-[9px] text-violet-500"
+            className="h-5 rounded-xl border-2 border-indigo-200 bg-indigo-50 px-2 text-[9px] font-bold text-indigo-400"
           >
             Beta
           </Badge>
         </div>
 
-        <h1 className="mb-3 text-4xl font-bold tracking-tight sm:text-5xl">
-          <span className="bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
-            Generador de
-          </span>
-          <br />
-          <span className="bg-gradient-to-r from-violet-400 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent">
-            sitios web
-          </span>
+        <h1 className="mb-3 text-4xl font-black tracking-tight text-indigo-900 sm:text-5xl">
+          Generador de{" "}
+          <span className="text-indigo-500">sitios web</span>
         </h1>
-        <p className="mx-auto max-w-sm text-base leading-relaxed text-slate-600">
+        <p className="mx-auto max-w-sm text-base leading-relaxed text-indigo-400">
           Completá el formulario y obtené el prompt perfecto para crear tu sitio con Claude.
         </p>
       </header>
@@ -900,82 +900,78 @@ export function WebsiteGenerator() {
 
       {/* ── Card ── */}
       <div className="w-full max-w-2xl">
-        {/* Gradient border wrapper */}
-        <div className="rounded-2xl bg-gradient-to-b from-white/14 via-white/5 to-transparent p-px">
-          <div className="rounded-2xl bg-[#0c0f1e]/85 shadow-2xl backdrop-blur-2xl">
-            {/* Card header */}
-            <div className="flex items-center gap-3 border-b border-white/8 bg-white/[0.015] px-6 py-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-violet-500/20 bg-violet-500/12">
-                <currentStep.icon size={14} className="text-violet-400" />
-              </div>
-              <div>
-                <h2 className="text-sm font-semibold leading-none text-white">
-                  {currentStep.label}
-                </h2>
-                <p className="mt-0.5 text-[11px] text-slate-600">
-                  {currentStep.description}
-                </p>
-              </div>
-              <span className="ml-auto font-mono text-xs text-slate-700">
-                {step + 1}/{STEPS.length}
-              </span>
+        <div className="rounded-3xl border-2 border-indigo-100 bg-white shadow-[0_8px_0_0_#C7D2FE]">
+          {/* Card header */}
+          <div className="flex items-center gap-3 border-b-2 border-indigo-50 bg-indigo-50/50 px-6 py-4 rounded-t-3xl">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-500 shadow-[0_4px_0_0_#4338CA]">
+              <currentStep.icon size={16} className="text-white" />
+            </div>
+            <div>
+              <h2 className="text-sm font-black leading-none text-indigo-900">
+                {currentStep.label}
+              </h2>
+              <p className="mt-0.5 text-[11px] font-medium text-indigo-400">
+                {currentStep.description}
+              </p>
+            </div>
+            <span className="ml-auto font-mono text-xs font-bold text-indigo-300">
+              {step + 1}/{STEPS.length}
+            </span>
+          </div>
+
+          {/* Card body */}
+          <div className="px-6 py-6">{renderStep()}</div>
+
+          {/* Card footer */}
+          <div className="flex items-center justify-between border-t-2 border-indigo-50 bg-indigo-50/30 px-6 py-4 rounded-b-3xl">
+            <Button
+              variant="ghost"
+              onClick={() => setStep((s) => s - 1)}
+              disabled={step === 0}
+              className="h-10 gap-1.5 rounded-2xl border-2 border-indigo-100 bg-white px-4 text-indigo-400 shadow-[0_4px_0_0_#C7D2FE] hover:bg-indigo-50 hover:text-indigo-600 hover:shadow-[0_2px_0_0_#C7D2FE] disabled:opacity-30 disabled:shadow-none transition-all active:shadow-none active:translate-y-1"
+            >
+              <ChevronLeft size={14} />
+              <span className="text-sm font-semibold">Anterior</span>
+            </Button>
+
+            {/* Dot indicator */}
+            <div className="flex items-center gap-1.5">
+              {STEPS.map((_, i) => (
+                <div
+                  key={i}
+                  className={cn(
+                    "rounded-full transition-all duration-300",
+                    i === step
+                      ? "h-2.5 w-6 bg-indigo-500"
+                      : i < step
+                      ? "h-2.5 w-2.5 bg-indigo-300"
+                      : "h-2.5 w-2.5 bg-indigo-100"
+                  )}
+                />
+              ))}
             </div>
 
-            {/* Card body */}
-            <div className="px-6 py-6">{renderStep()}</div>
-
-            {/* Card footer */}
-            <div className="flex items-center justify-between border-t border-white/8 bg-white/[0.01] px-6 py-4">
+            {step < STEPS.length - 1 ? (
               <Button
-                variant="ghost"
-                onClick={() => setStep((s) => s - 1)}
-                disabled={step === 0}
-                className="h-9 gap-1.5 px-3 text-slate-600 hover:bg-white/5 hover:text-slate-300 disabled:opacity-25"
+                onClick={() => setStep((s) => s + 1)}
+                className="h-10 gap-1.5 rounded-2xl border-0 bg-indigo-500 px-5 text-white shadow-[0_4px_0_0_#4338CA] hover:bg-indigo-600 hover:shadow-[0_2px_0_0_#4338CA] active:shadow-none active:translate-y-1 transition-all"
               >
-                <ChevronLeft size={14} />
-                <span className="text-sm">Anterior</span>
+                <span className="text-sm font-bold">Siguiente</span>
+                <ArrowRight size={14} />
               </Button>
-
-              {/* Dot indicator */}
-              <div className="flex items-center gap-1.5">
-                {STEPS.map((_, i) => (
-                  <div
-                    key={i}
-                    className={cn(
-                      "rounded-full transition-all duration-300",
-                      i === step
-                        ? "h-1.5 w-4 bg-violet-400"
-                        : i < step
-                        ? "h-1.5 w-1.5 bg-violet-700"
-                        : "h-1.5 w-1.5 bg-white/10"
-                    )}
-                  />
-                ))}
-              </div>
-
-              {step < STEPS.length - 1 ? (
-                <Button
-                  onClick={() => setStep((s) => s + 1)}
-                  className="h-9 gap-1.5 border-0 bg-gradient-to-r from-violet-600 to-violet-500 px-4 text-white shadow-[0_0_20px_rgba(139,92,246,0.35)] transition-all duration-200 hover:from-violet-500 hover:to-fuchsia-500 hover:shadow-[0_0_24px_rgba(139,92,246,0.45)]"
-                >
-                  <span className="text-sm">Siguiente</span>
-                  <ArrowRight size={13} />
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => { setForm(defaultForm); setStep(0); }}
-                  variant="outline"
-                  className="h-9 gap-1.5 border-white/10 px-4 text-slate-500 hover:bg-white/5 hover:text-white"
-                >
-                  <span className="text-sm">Nuevo sitio</span>
-                </Button>
-              )}
-            </div>
+            ) : (
+              <Button
+                onClick={() => { setForm(defaultForm); setStep(0); }}
+                className="h-10 gap-1.5 rounded-2xl border-2 border-indigo-200 bg-white px-4 text-indigo-500 shadow-[0_4px_0_0_#C7D2FE] hover:bg-indigo-50 hover:shadow-[0_2px_0_0_#C7D2FE] active:shadow-none active:translate-y-1 transition-all"
+              >
+                <span className="text-sm font-semibold">Nuevo sitio</span>
+              </Button>
+            )}
           </div>
         </div>
       </div>
 
-      <p className="mt-5 text-[11px] text-slate-700">
+      <p className="mt-6 text-xs font-medium text-indigo-300">
         Los campos marcados con * son requeridos
       </p>
     </div>
